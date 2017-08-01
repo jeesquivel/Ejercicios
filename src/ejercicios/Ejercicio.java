@@ -187,6 +187,78 @@ public class Ejercicio {
         }
         return true;
     }
+    
+    
+    
+    
+     /**
+     *  Verifica si un año es bisciesto o no
+     * @param anno
+     * @return  valor boleano
+     */
+    public boolean  annoBisciesto(int anno){
+        return ( anno % 4 == 0 && anno % 100 != 0 || anno % 400 == 0);
+    }
+    
+    
+    
+    /**
+     *  retorna la cantidad de digitos de un digito
+     * @param n un entero positivo
+     * @return  la cantidad de digitos del nuemro
+     */
+    public int contarDigitos(int n){
+        int cont = 0;
+        while (n>9) {
+            n=n/10;
+            cont++;
+        }
+        return cont+1;
+    }
+       
+    
+    /**
+     * Invierte un numero dado
+     * @param n un entero
+     * @return un numero invertido con respeto al valor de entrada
+     */
+    public  int numeroInvertido (int n){
+        int num=0;
+        while(n>9){
+            num=(int) ((num)*10+n%10);
+            n= n/10;
+        }
+        return num*10+n;
+    }
+    
+ 
+
+    /**
+     * MCD de dos numeros
+     * @param a entero
+     * @param b entero
+     * @return  mcd de  los nuemros 
+     */
+    public int MCD(int a, int b){
+        List lista1= divisores(a);
+        List lista2 = divisores(b);
+        int mcd=0;
+        for (Object i : lista2) {
+            if ((lista1.contains(i) & (int) i>mcd))
+                mcd=(int)i;
+        }
+        return mcd;
+    }
+    
+    /**
+     *  retorna el mcm de dos numeros
+     * @param a entero 
+     * @param b enterto
+     * @return minimo comun multiplo
+     */
+    public  int mcm(int a, int b){
+        return  (int) (a*b)/MCD(a, b);
+    }
 
     
     public static void main(String[] args) {
