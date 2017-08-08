@@ -259,6 +259,148 @@ public class Ejercicio {
     public  int mcm(int a, int b){
         return  (int) (a*b)/MCD(a, b);
     }
+    
+    
+       
+    /**
+     * Imprime un vector por medio de un string
+     * @param fila
+     * @param Inicio
+     * @param Final
+     * @return 
+     */
+    private static String filaMatrizToString(int[] fila,
+        String Inicio, String Final){
+        String resp = Inicio + "";
+        int columnas = fila.length;
+        for (int m = 0; m < columnas - 1; m++)
+            resp += fila[m] + "\t";
+        resp += fila[columnas - 1] + "" + Final;
+        return resp;
+    }
+    
+
+    /**
+     * Imprime una matrix por medio de un string
+     * @param A una matrix
+     * @return 
+     */
+    public static String matrizToString(int[][] A){
+        int filas = A.length;
+        String resp = "";
+        if (filas == 0)
+            resp = "()";
+        else if (filas == 1)
+            resp = filaMatrizToString(A[0], "(", ")");
+        else{
+            resp += filaMatrizToString(A[0], "|", "|") + "\n";
+            for (int n = 1; n < filas - 1; n++)
+                resp += filaMatrizToString(A[n], "|", "|") + "\n";
+            resp += filaMatrizToString(A[filas - 1], "|", "|");
+        }
+        return resp;
+    }
+
+    
+    /**
+     * Suma  dos  matrtices del mismo tamanno
+     * @param m1
+     * @param m2
+     * @return una matrix
+     */
+    public int[][] sumaMatriz(int[][] m1, int[][] m2){
+        for (int i = 0; i <m1.length; i++) {
+            for (int j = 0; j <m1[i].length; j++) {
+                m1[i][j]+=m2[i][j];
+            }
+        }
+        return m1;
+    }
+    
+    
+    /**
+     * Resta  dos  matrtices del mismo tamanno
+     * @param m1
+     * @param m2
+     * @return una matrix
+     */
+    public int[][] restaMatriz(int[][] m1, int[][] m2){
+        for (int i = 0; i <m1.length; i++) {
+            for (int j = 0; j <m1[i].length; j++) {
+                m1[i][j]+=m2[i][j];
+            }
+        }
+        return m1;
+    }
+
+    public ejercicio() {
+    }
+    
+    
+    
+    /**
+     *  retorna el menor de una  matriz
+     * @param matriz
+     * @param f fila a eliminar
+     * @param c columna a eliminar
+     * @return  un matriz
+     */
+    public  int[][] menor(int [][] matriz , int f, int c){
+        int[][] menor= new int[matriz.length-1][matriz.length-1];
+        int posx=0;
+        int posy;
+        for (int i = 0; i < matriz.length; i++) {
+            if (i!=f) {  
+                posy=0;
+                for (int j = 0; j < matriz.length; j++) {
+                    if (j!=c) {
+                        menor[posx][posy]=matriz[i][j];
+                        posy++;
+                    }
+                }
+                posy=0;
+                posx++;
+           }           
+        }
+        return menor;
+        }
+        
+    
+    
+   
+  
+    
+    
+    /**
+     * calculan determinante de 2 por 2
+     * @param m
+     * @return 
+     */
+    public int  determinateBasico(int[][] m){
+         return m[0][0]*m[1][1]-m[0][1]*m[1][0];
+    }
+    
+    
+    
+    /**
+     * retorna el determinante de una matriz
+     * @param matrix cuadrada
+     * @return 
+     */
+    
+    public int determinanteMatrix(int[][] matrix){
+        if (matrix.length==2) 
+            return determinateBasico(matrix); 
+        int suma=0;
+        for (int i = 0; i < matrix.length; i++) {
+                if (i%2==0) 
+                    suma+=matrix[0][i]*determinanteMatrix(menor(matrix, 0, i));  
+                else
+                    suma-=matrix[0][i]*determinanteMatrix(menor(matrix, 0, i));
+        }
+    return suma;
+    }
+ 
 
     
     public static void main(String[] args) {
