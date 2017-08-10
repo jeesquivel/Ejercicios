@@ -492,6 +492,54 @@ public class Ejercicio {
         return cribaEratostenes(n,i,lista);
     }
 
+    
+    
+    
+    
+       /**
+     * Aproxima e^x con i iteraciones
+     * @param x 
+     * @param i iteraciones
+     * @return aproximacion de e^x
+     */
+    public double exponencialBaseE(int x,int i){
+        double sum=0;
+        for (int j = 0; j <=i; j++) {
+            sum+=  Math.pow(x,j)/factorialRecursivo(j);
+        }
+        return sum;
+    }
+    
+    
+    
+    /**
+     * Determina el producto de dos matrices
+     * @param m1 matriz 1
+     * @param m2 matriz 2 
+     * @return  producto de matriz
+     */
+    public  int[][] productoMatriz(int[][] m1, int[][] m2){
+        int[][] producto= new int[m1.length][m2[0].length];
+        int i=0;
+        int j=0;
+        int columna=0;
+        int suma=0;
+        while (i<m1.length) {
+            while (j<m2.length) {
+                suma+=m1[i][j]*m2[j][columna];
+                j++;}
+            j=0;
+            producto[i][columna]=suma;
+            if (columna==m1.length-1){
+                columna=0;
+                i++;
+            } 
+            else columna++;
+            suma=0;
+        }
+        return producto;
+    }
+    
 
     public static void main(String[] args) {
         Ejercicio ejemplo= new Ejercicio();
