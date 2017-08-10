@@ -225,7 +225,7 @@ public class Ejercicio {
     public  int numeroInvertido (int n){
         int num=0;
         while(n>9){
-            num=(int) ((num)*10+n%10);
+            num=(int) (num*10+n%10);
             n= n/10;
         }
         return num*10+n;
@@ -259,13 +259,14 @@ public class Ejercicio {
     public  int mcm(int a, int b){
         return  (int) (a*b)/MCD(a, b);
     }
-    
-    
-       
+
+    /**
+     * Imprime una matrix por medio de un string
+     * @param A una matrix
+     * @return
+     */
 
 
-
-    
     /**
      * Suma  dos  matrtices del mismo tamanno
      * @param m1
@@ -320,7 +321,6 @@ public class Ejercicio {
                         posy++;
                     }
                 }
-                posy=0;
                 posx++;
            }           
         }
@@ -349,19 +349,38 @@ public class Ejercicio {
      * @param matrix cuadrada
      * @return 
      */
-
     public int determinanteMatrix(int[][] matrix){
         if (matrix.length==2)
             return determinateBasico(matrix);
         int suma=0;
         for (int i = 0; i < matrix.length; i++) {
-                if (i%2==0) 
-                    suma+=matrix[0][i]*determinanteMatrix(menor(matrix, 0, i));  
-                else
-                    suma-=matrix[0][i]*determinanteMatrix(menor(matrix, 0, i));
+            if (i%2==0)
+                suma+=matrix[0][i]*determinanteMatrix(menor(matrix, 0, i));
+            else
+                suma-=matrix[0][i]*determinanteMatrix(menor(matrix, 0, i));
         }
-    return suma;
+        return suma;
     }
+
+
+    /**
+     * Retorna la transpuesta de una matriz
+     * @param matriz una matriz de tamanno nxm
+     * @return transpuesta
+     */
+    public int[][] transpuestaMatriz(int[][] matriz){
+        int[][] transpuesta = new int[matriz[0].length][matriz.length];
+        for (int i = 0; i < matriz.length ; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                transpuesta[j][i]=matriz[i][j];
+            }
+        }
+        System.out.print(matrizToString(transpuesta));
+
+        return transpuesta;
+    }
+
+
  
 
 
@@ -373,7 +392,7 @@ public class Ejercicio {
      * @param Final
      * @return
      */
-    private static String filaMatrizToString(int[] fila,
+    public  String filaMatrizToString(int[] fila,
                                              String Inicio, String Final){
         String resp = Inicio + "";
         int columnas = fila.length;
@@ -389,7 +408,7 @@ public class Ejercicio {
      * @param A una matrix
      * @return
      */
-    public static String matrizToString(int[][] A){
+    public  String matrizToString(int[][] A){
         int filas = A.length;
         String resp = "";
         if (filas == 0)
@@ -405,14 +424,82 @@ public class Ejercicio {
         return resp;
     }
 
+    /**
+     * Retorna la fila i aumentada k veces la fila j
+     * @param matriz
+     * @param i fila
+     * @param j columna
+     * @param k escalar
+     * @return matriz
+     */
+    public int[][] sumaFilaMatriz(int[][] matriz,int i,int j, int k){
+        for (int c = 0; c <matriz[0].length ; c++) {
+            matriz[i][c]+= k*matriz[j][c];
+        }
+        System.out.print(matrizToString(matriz));
+        return matriz;
+    }
+
+    /**
+     * Calcula la norma de un vector
+     * @param vector
+     * @return norma de vector
+     */
+    public float normaVector(int[] vector){
+        double suma=0;
+        for (int i = 0; i <vector.length ; i++) {
+            suma+= Math.pow(vector[i],2);
+        }
+        return (float) Math.sqrt(suma);
+    }
 
 
+    /**
+     * Calcula el producto punto de dos vectores
+     * @param v1 vector1
+     * @param v2 vector 2
+     * @return producto punto
+     */
+    public int productoPuntoVectores(int[] v1, int[] v2){
+        int res=0;
+        for (int i = 0; i <v1.length ; i++) {
+            res+=v1[i]*v2[i];
+        }
+        return res;
+    }
 
+
+    public ArrayList criba(int n){
+        int[] lista= new int[n+1];
+        lista=cribaEratostenes(n,2,lista);
+        ArrayList<Integer> primos=new ArrayList<>();
+        for (int i = 2; i <lista.length ; i++) {
+            if (lista[i]==0)
+                primos.add(i);
+        }
+        return primos;
+    }
+
+    public int[] cribaEratostenes(int n , int i,int[] lista){
+        if (i>Math.sqrt(n))
+            return lista;
+        if (lista[i]==1)
+            return cribaEratostenes(n,i+1,lista);
+        for (int j = i*2; j <lista.length ; j+=i) {
+            lista[j]=1; /* se le asigna la marca de tachado */
+        }
+        i++;
+        return cribaEratostenes(n,i,lista);
+    }
 
 
     public static void main(String[] args) {
         Ejercicio ejemplo= new Ejercicio();
-        System.out.print(ejemplo.esPrimo(91));
+
+
+        int[][] m={{0,2,3,4},{3,4,5,0},{1,6,7,-8}};
+
+        System.out.print(ejemplo.criba(100000));
 
 
 
