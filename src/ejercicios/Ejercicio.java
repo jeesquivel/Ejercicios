@@ -44,7 +44,7 @@ public class Ejercicio {
         if (num1==num2 & num2==num3)
             return "equlatero";
         else{
-            if (num1==num2 || num2==num1 || num1== num3)
+            if (num1==num2 || num2==num3 || num1== num3)
                 return "isósceles";
             return "escaleno";
         }
@@ -91,7 +91,7 @@ public class Ejercicio {
         for (int i = 1; i < b ; i++) {
             res+=a;
         }
-            return  res;
+        return  res;
     }
 
     /**
@@ -187,11 +187,11 @@ public class Ejercicio {
         }
         return true;
     }
-    
-    
-    
-    
-     /**
+
+
+
+
+    /**
      *  Verifica si un año es bisciesto o no
      * @param anno
      * @return  valor boleano
@@ -199,9 +199,9 @@ public class Ejercicio {
     public boolean  annoBisciesto(int anno){
         return ( anno % 4 == 0 && anno % 100 != 0 || anno % 400 == 0);
     }
-    
-    
-    
+
+
+
     /**
      *  retorna la cantidad de digitos de un digito
      * @param n un entero positivo
@@ -215,8 +215,8 @@ public class Ejercicio {
         }
         return cont+1;
     }
-       
-    
+
+
     /**
      * Invierte un numero dado
      * @param n un entero
@@ -230,14 +230,14 @@ public class Ejercicio {
         }
         return num*10+n;
     }
-    
- 
+
+
 
     /**
      * MCD de dos numeros
      * @param a entero
      * @param b entero
-     * @return  mcd de  los nuemros 
+     * @return  mcd de  los nuemros
      */
     public int MCD(int a, int b){
         List lista1= divisores(a);
@@ -249,10 +249,10 @@ public class Ejercicio {
         }
         return mcd;
     }
-    
+
     /**
      *  retorna el mcm de dos numeros
-     * @param a entero 
+     * @param a entero
      * @param b enterto
      * @return minimo comun multiplo
      */
@@ -260,7 +260,147 @@ public class Ejercicio {
         return  (int) (a*b)/MCD(a, b);
     }
 
-    
+
+
+    /**
+     * Imprime un vector por medio de un string
+     * @param fila
+     * @param Inicio
+     * @param Final
+     * @return
+     */
+    private static String filaMatrizToString(int[] fila,
+                                             String Inicio, String Final){
+        String resp = Inicio + "";
+        int columnas = fila.length;
+        for (int m = 0; m < columnas - 1; m++)
+            resp += fila[m] + "\t";
+        resp += fila[columnas - 1] + "" + Final;
+        return resp;
+    }
+
+
+    /**
+     * Imprime una matrix por medio de un string
+     * @param A una matrix
+     * @return
+     */
+    public static String matrizToString(int[][] A){
+        int filas = A.length;
+        String resp = "";
+        if (filas == 0)
+            resp = "()";
+        else if (filas == 1)
+            resp = filaMatrizToString(A[0], "(", ")");
+        else{
+            resp += filaMatrizToString(A[0], "|", "|") + "\n";
+            for (int n = 1; n < filas - 1; n++)
+                resp += filaMatrizToString(A[n], "|", "|") + "\n";
+            resp += filaMatrizToString(A[filas - 1], "|", "|");
+        }
+        return resp;
+    }
+
+
+    /**
+     * Suma  dos  matrtices del mismo tamanno
+     * @param m1
+     * @param m2
+     * @return una matrix
+     */
+    public int[][] sumaMatriz(int[][] m1, int[][] m2){
+        for (int i = 0; i <m1.length; i++) {
+            for (int j = 0; j <m1[i].length; j++) {
+                m1[i][j]+=m2[i][j];
+            }
+        }
+        return m1;
+    }
+
+
+    /**
+     * Resta  dos  matrtices del mismo tamanno
+     * @param m1
+     * @param m2
+     * @return una matrix
+     */
+    public int[][] restaMatriz(int[][] m1, int[][] m2){
+        for (int i = 0; i <m1.length; i++) {
+            for (int j = 0; j <m1[i].length; j++) {
+                m1[i][j]+=m2[i][j];
+            }
+        }
+        return m1;
+    }
+
+
+
+
+    /**
+     *  retorna el menor de una  matriz
+     * @param matriz
+     * @param f fila a eliminar
+     * @param c columna a eliminar
+     * @return  un matriz
+     */
+    public  int[][] menor(int [][] matriz , int f, int c){
+        int[][] menor= new int[matriz.length-1][matriz.length-1];
+        int posx=0;
+        int posy;
+        for (int i = 0; i < matriz.length; i++) {
+            if (i!=f) {
+                posy=0;
+                for (int j = 0; j < matriz.length; j++) {
+                    if (j!=c) {
+                        menor[posx][posy]=matriz[i][j];
+                        posy++;
+                    }
+                }
+                posy=0;
+                posx++;
+            }
+        }
+        return menor;
+    }
+
+
+
+
+
+
+
+    /**
+     * calculan determinante de 2 por 2
+     * @param m
+     * @return
+     */
+    public int  determinateBasico(int[][] m){
+        return m[0][0]*m[1][1]-m[0][1]*m[1][0];
+    }
+
+
+
+    /**
+     * retorna el determinante de una matriz
+     * @param matrix cuadrada
+     * @return
+     */
+
+    public int determinanteMatrix(int[][] matrix){
+        if (matrix.length==2)
+            return determinateBasico(matrix);
+        int suma=0;
+        for (int i = 0; i < matrix.length; i++) {
+            if (i%2==0)
+                suma+=matrix[0][i]*determinanteMatrix(menor(matrix, 0, i));
+            else
+                suma-=matrix[0][i]*determinanteMatrix(menor(matrix, 0, i));
+        }
+        return suma;
+    }
+
+
+
     public static void main(String[] args) {
         Ejercicio ejemplo= new Ejercicio();
         System.out.print(ejemplo.esPrimo(91));
@@ -268,5 +408,5 @@ public class Ejercicio {
 
 
     }
-    
+
 }
